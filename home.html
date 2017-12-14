@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Projet WebGL</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			html, body {
+				width: 100%;
+				height: 100%;
+			}
+			body {
+				background-color: #ffffff;
+				margin: 0;
+				overflow: hidden;
+				font-family: arial;
+			}
+			#blocker {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0,0,0,0.5);
+			}
+			#instructions {
+				width: 100%;
+				height: 100%;
+				display: -webkit-box;
+				display: -moz-box;
+				display: box;
+				-webkit-box-orient: horizontal;
+				-moz-box-orient: horizontal;
+				box-orient: horizontal;
+				-webkit-box-pack: center;
+				-moz-box-pack: center;
+				box-pack: center;
+				-webkit-box-align: center;
+				-moz-box-align: center;
+				box-align: center;
+				color: #ffffff;
+				text-align: center;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<script src="lib/three.min.js"></script>
+		<script src="lib/PointerLockControls.js"></script>
+		<script src="lib/stats.min.js"></script>
+		<script src="loaders/DDSLoader.js"></script>
+		<script src="loaders/MTLLoader.js"></script>
+		<script src="loaders/OBJLoader.js"></script>
+		<script src="lib/Detector.js"></script>
+
+		<div id="blocker">
+			<div id="instructions">
+				<span style="font-size:40px">Bienvenue</span>
+				<br />
+				(Z, Q, S, D = Se déplacer, ESPACE = Sauter, Déplacement souris = Caméra)
+			</div>
+		</div>
+
+		<script src="js/core.js"></script>
+		<script src="js/positionaleSong.js"></script>
+		<script src="js/lights.js"></script>
+		<script src="js/addOBJ.js"></script>
+        <script src="js/addBasicMesh.js"></script>
+	</body>
+</html>
