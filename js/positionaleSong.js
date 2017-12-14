@@ -14,7 +14,7 @@ audioLoader.load('sounds/son.ogg', function(buffer) {
 });
 
 //Création d'un cube avec son spatialisé
-var texture = new THREE.ImageUtils.loadTexture("textures/crate.jpg");
+var texture = new THREE.ImageUtils.loadTexture("textures/giphy.gif");
 texture.minFilter = THREE.NearestFilter;
 var geometry = new THREE.BoxGeometry(4, 4, 4);
 var material = new THREE.MeshBasicMaterial({

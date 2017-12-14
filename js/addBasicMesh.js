@@ -1,10 +1,10 @@
 // floor
-var floorGeometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 );
+var floorGeometry = new THREE.PlaneGeometry( 200, 200, 1, 100 );
 floorGeometry.rotateX( - Math.PI / 2 );
 
-var floorTexture = new THREE.TextureLoader().load('textures/sol.jpg');
+var floorTexture = new THREE.TextureLoader().load('textures/stone.jpg');
 floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
-floorTexture.repeat.set( 15, 15 );
+floorTexture.repeat.set( 10, 10 );
 
 var floorMaterial = new THREE.MeshPhongMaterial( { map: floorTexture } );
 var floor = new THREE.Mesh( floorGeometry, floorMaterial );
@@ -25,6 +25,7 @@ torusKnot.scale.multiplyScalar( 1 / 18 );
 torusKnot.position.y = 3;
 torusKnot.castShadow = true;
 torusKnot.receiveShadow = true;
+torusKnot.velocity = 1;
 scene.add( torusKnot );
 
 var geometry = new THREE.BoxGeometry( 20, 20, 20 );
@@ -51,3 +52,61 @@ var material1 = new THREE.MeshStandardMaterial( {
     metalness: 1,//Aspect verre
     transparent: true
 } );
+
+var blocks = [];
+
+loader = new THREE.TextureLoader();
+
+// Materials
+table_material = Physijs.createMaterial(
+    new THREE.MeshLambertMaterial({ map: loader.load( 'textures/wood.jpg' )}),
+    .9, // high friction
+    .2 // low restitution
+);
+table_material.map.wrapS = table_material.map.wrapT = THREE.RepeatWrapping;
+table_material.map.repeat.set( 5, 5 );
+
+block_material = Physijs.createMaterial(
+    new THREE.MeshLambertMaterial({ map: loader.load( 'textures/plywood.jpg' )}),
+    .4, // medium friction
+    .4 // medium restitution
+);
+block_material.map.wrapS = block_material.map.wrapT = THREE.RepeatWrapping;
+block_material.map.repeat.set( 1, .5 );
+
+createTower = (function() {
+    var block_length = 6, block_height = 1, block_width = 1.5, block_offset = 2,
+        block_geometry = new THREE.BoxGeometry( block_length, block_height, block_width );
+
+    return function() {
+        var i, j, rows = 16,
+            block;
+
+        for ( i = 0; i < rows; i++ ) {
+            for ( j = 0; j < 3; j++ ) {
+                block = new Physijs.BoxMesh( block_geometry, block_material );
+                block.position.y = (block_height / 2) + block_height * i;
+                if ( i % 2 === 0 ) {
+                    block.rotation.y = Math.PI / 2.01;
+                    block.position.x = block_offset * j - ( block_offset * 3 / 2 - block_offset / 2 ) + 25;
+                } else {
+                    block.position.z = block_offset * j - ( block_offset * 3 / 2 - block_offset / 2 )+ 25;
+                }
+                block.receiveShadow = true;
+                block.castShadow = true;
+                scene.add( block );
+                blocks.push( block );
+            }
+        }
+    }
+})();
+
+createTower();
+/*
+var geometry = new Physijs.BoxMesh( 20, 20, 20 );
+test = new THREE.Mesh( geometry, material );
+test.position.set( 8, 1, 24 );
+test.castShadow = true;
+test.receiveShadow = true;
+scene.add( test );
+*/
